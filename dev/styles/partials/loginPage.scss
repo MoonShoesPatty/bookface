@@ -1,0 +1,26 @@
+.loginForm {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    margin-top: 120px;
+    padding: 120px 30px 0 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $lightText;
+    border: 1px solid $outlines;
+    position: relative;
+}
+.loginAvatar {
+    width: 200px;
+    border-radius: 50%;
+    margin: 0;
+    position: absolute;
+    top: -100px;
+}
+.loginLabel {
+    width: 100%;
+}
+.loginInput {
+    width: 100%;
+}

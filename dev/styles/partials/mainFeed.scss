@@ -7,7 +7,7 @@
     border: 1px solid $outlines;
     border-radius: 50%;
 }
-.newPostInput {
+[type=text], [type=password], textarea {
     width: calc(100% - 60px);
     border: 1px solid $outlines;
     padding: 10px;
