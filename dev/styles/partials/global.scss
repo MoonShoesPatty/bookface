@@ -3,7 +3,7 @@ $lightText: #FFFFFF;
 $mainColor: #7619A9;
 $mainDark: rgb(75, 11, 109);
 $background: #EAEAEA;
-$outlines: #CCCCCC;
+$outlines: #DDDDDD;
 
 // FONT STACK VARIABLES
 $mainFont: 'Montserrat', sans-serif;
@@ -12,9 +12,16 @@ $mainFont: 'Montserrat', sans-serif;
 body {
     font-family: $mainFont;
     margin: 0;
+    margin-top: 70px;
     background-color: $background;
     padding: 10px;
 }
 p {
 	margin: 0;
+}
+
+.hiddenLabel {
+    visibility: hidden;
+    position: absolute;
+    left: -1000px;
 }

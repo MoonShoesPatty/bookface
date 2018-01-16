@@ -1,0 +1,16 @@
+.newPostForm {
+    display: flex;
+}
+.userAvatar {
+    height: 50px;
+    margin-right: 10px;
+    border: 1px solid $outlines;
+    border-radius: 50%;
+}
+.newPostInput {
+    width: calc(100% - 60px);
+    border: 1px solid $outlines;
+    padding: 10px;
+    height: 50px;
+    overflow-x: hidden;
+}

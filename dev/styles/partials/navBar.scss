@@ -7,11 +7,13 @@
 	background-color: $mainColor;
 	text-transform: uppercase;
 	border-bottom: 1px solid $mainDark;
+	height: 50px;
+	align-items: center;
+	box-shadow: 0 0 5px rgba(0,0,0,0.5)
 }
 .navBar a {
 	width: 33.33%;
 	text-align: center;
 	color: $lightText;
 	text-decoration: none;
-	padding: 20px 0 15px 0;
 }
