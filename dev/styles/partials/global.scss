@@ -1,12 +1,4 @@
-// COLOUR VARIABLES
-$lightText: #FFFFFF;
-$mainColor: #7619A9;
-$mainDark: rgb(75, 11, 109);
-$background: #EAEAEA;
-$outlines: #DDDDDD;
-
-// FONT STACK VARIABLES
-$mainFont: 'Montserrat', sans-serif;
+@import './variables.scss';
 
 // GLOBAL STYLES
 body {
@@ -20,8 +12,24 @@ p {
 	margin: 0;
 }
 
+// GENERAL FORM STYLES
 .hiddenLabel {
     visibility: hidden;
     position: absolute;
     left: -1000px;
+}
+[type="text"], [type="password"], textarea {
+    width: calc(100% - 60px);
+    border: 1px solid $outlines;
+    padding: 10px;
+    height: 50px;
+    overflow-x: hidden;
+}
+[type="submit"] {
+    color: $lightText;
+    background-color: $mainColor;
+    background-image: none;
+    border: 1px solid $mainDark;
+    padding: 0 20px;
+    height: 35px;
 }

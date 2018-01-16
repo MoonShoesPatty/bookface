@@ -43,7 +43,7 @@ class LoginPage extends React.Component {
 					<label htmlFor="loginPassword" className="loginLabel">Password:</label>
 					<input type="password" id="loginPassword" name="loginPassword" onChange={this.handleChange} value={this.state.loginPassword} placeholder="Password" required className="loginInput" />
 					
-					<input type="submit" value="Login" />
+					<input type="submit" className="loginButton" value="Login" />
 				</form>
 			</main>
 		)
