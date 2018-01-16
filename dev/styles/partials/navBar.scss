@@ -1,8 +1,17 @@
 .navBar {
-    display: flex;
-    width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	width: 100vw;
+	background-color: $mainColor;
+	text-transform: uppercase;
+	border-bottom: 1px solid $mainDark;
 }
 .navBar a {
-    width: 33.33%;
-    text-align: center;
+	width: 33.33%;
+	text-align: center;
+	color: $lightText;
+	text-decoration: none;
+	padding: 20px 0 15px 0;
 }

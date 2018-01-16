@@ -10,6 +10,23 @@ class ProfilePage extends React.Component {
         return (
             <main>
                 <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
+                <p>Profile Page.</p>
             </main>
         )
     }
