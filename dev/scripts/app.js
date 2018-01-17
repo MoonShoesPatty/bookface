@@ -33,7 +33,8 @@ class App extends React.Component {
 					<NavBar />
 					<Switch>
 						<Route exact path='/' component={MainFeed}></Route>
-						<Route exact path='/settings' component={CreateAccountPage}></Route>
+						<Route exact path='/settings' component={SettingsPage}></Route>
+						<Route exact path='/create' component={CreateAccountPage}></Route>
 						<Route exact path='/:username' component={ProfilePage}></Route>
 					</Switch>
 				</div>
