@@ -34,7 +34,7 @@ class LoginPage extends React.Component {
 	render() {
 		return (
 			<main>
-				<form action="" onSubmit={this.handleSubmit} className="loginForm">
+				<form action="" onSubmit={this.handleSubmit} className="loginForm generalForm">
 					<img src="../pj.jpg" alt="Your profile picture" className="loginAvatar" />
 					
 					<label htmlFor="loginUserName" className="loginLabel">Username:</label>

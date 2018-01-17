@@ -12,6 +12,7 @@ import MainFeed from './components/mainFeed.js';
 import LoginPage from './components/LoginPage.js';
 import ProfilePage from './components/profilePage.js';
 import SettingsPage from './components/settingsPage.js';
+import CreateAccountPage from './components/CreateAccountPage.js';
 
 // Initialize Firebase
 var config = {
@@ -32,7 +33,7 @@ class App extends React.Component {
 					<NavBar />
 					<Switch>
 						<Route exact path='/' component={MainFeed}></Route>
-						<Route exact path='/settings' component={LoginPage}></Route>
+						<Route exact path='/settings' component={CreateAccountPage}></Route>
 						<Route exact path='/:username' component={ProfilePage}></Route>
 					</Switch>
 				</div>

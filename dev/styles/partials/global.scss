@@ -4,15 +4,37 @@
 body {
     font-family: $mainFont;
     margin: 0;
-    margin-top: 70px;
     background-color: $background;
     padding: 10px;
+    padding-top: 70px;
 }
 p {
 	margin: 0;
 }
+.moduleTitle {
+    text-transform: uppercase;
+    font-weight: 300;
+    color: $mainColor;
+    margin: 0;
+}
+.moduleTitle span {
+    font-weight: 700;
+}
 
 // GENERAL FORM STYLES
+.generalForm {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $lightText;
+    border: 1px solid $outlines;
+    border-left: 3px solid $mainColor;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+    padding: 30px;
+}
 .hiddenLabel {
     visibility: hidden;
     position: absolute;

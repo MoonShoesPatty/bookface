@@ -10,7 +10,12 @@ class createAccountPage extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			newPost: '',
+			username: '',
+			password: '',
+			comfirmPassword: '',
+			firstName: '',
+			lastName: '',
+
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,30 +24,30 @@ class createAccountPage extends React.Component {
 	handleSubmit(event) {
 		event.preventDefault();
 		this.setState({
-			wallPosts: [],
-			newPost: ''
 		})
 	}
 
 	handleChange(event) {
 		this.setState({
-			newPost: event.target.value
+			[event.target.name]: event.target.value
 		});
 	}
 
 	render() {
 		return (
 			<main>
-				<form action="" onSubmit={this.handleSubmit} className="loginForm">
-					<img src="pj.jpg" alt="Your profile picture" className="userAvatar" />
-					<label htmlFor="newPost" className="hiddenLabel">Username:</label>
-					<input type="text" id="newPost" name="newPost" onChange={this.handleChange} value={this.state.newPost} placeholder="Username" required className="newPostInput" />
+				<form action="" onSubmit={this.handleSubmit} className="createForm generalForm">
+					<h1 className="moduleTitle"><span>Sign</span>Up</h1>
+					<label htmlFor="username" className="createLabel">Username:</label>
+					<input type="text" id="username" name="username" onChange={this.handleChange} value={this.state.username} placeholder="Username" required className="createInput" />
 
-					<label htmlFor="newPost" className="hiddenLabel">Password:</label>
-					<input type="text" id="newPost" name="newPost" onChange={this.handleChange} value={this.state.newPost} placeholder="Password" required className="newPostInput" />
+					<label htmlFor="password" className="createLabel">Password:</label>
+					<input type="text" id="password" name="password" onChange={this.handleChange} value={this.state.password} placeholder="Password" required className="createInput" />
 
-					<label htmlFor="newPost" className="hiddenLabel">Confirm Password:</label>
-					<input type="text" id="newPost" name="newPost" onChange={this.handleChange} value={this.state.newPost} placeholder="Username" required className="newPostInput" />
+					<label htmlFor="confirmPassword" className="createLabel">Confirm Password:</label>
+					<input type="text" id="confirmPassword" name="confirmPassword" onChange={this.handleChange} value={this.state.confirmPassword} placeholder="Confirm Password" required className="createInput" />
+
+					<input type="submit" className="createButton" value="Create Account" />
 				</form>
 			</main>
 		)

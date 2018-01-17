@@ -1,0 +1,16 @@
+@import './variables.scss';
+
+.createLabel {
+    width: 100%;
+    padding-left: 8px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: $mainColor;
+}
+.createInput[type="text"], .loginInput[type="password"] {
+    width: 100%;
+}
+.createButton {
+    margin-top: 25px;
+}
