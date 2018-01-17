@@ -30,7 +30,9 @@ class createAccountPage extends React.Component {
 			let userArray = [];
 			// Get list of usernames from Firebase
 			const usernames = await firebase.database().ref().once('value').then(function(snapshot) {
-				userArray = Object.keys(snapshot.val());
+				if (snapshot.val()) {
+					userArray = Object.keys(snapshot.val());
+				}
 			})
 			// Compare proposed name against list of existing usernames
 			if (userArray.map(name => {
