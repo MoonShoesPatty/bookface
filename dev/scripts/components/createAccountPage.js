@@ -20,6 +20,7 @@ class createAccountPage extends React.Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.pushToFirebase = this.pushToFirebase.bind(this);
+		this.removeChars = this.removeChars.bind(this);
 	}
 
 	// Create user form submitted
@@ -58,10 +59,36 @@ class createAccountPage extends React.Component {
 
 	// User action: type in any input
 	handleChange(event) {
+		// set state two separate times to allow error message to be thrown on bad character entry (i.e. ! or something) - tested in removeChars
 		this.setState({
-			[event.target.name]: event.target.value.toLowerCase(),
 			errorMessage: ''
-		});
+		})
+		if (event.target.name === 'username') {
+			// don't allow special characters in usernames
+			this.setState({
+				[event.target.name]: this.removeChars(event.target.value.toLowerCase())
+			});
+		} else {
+			this.setState({
+				[event.target.name]: event.target.value.toLowerCase()
+			});
+		}
+	}
+
+	// remove special characters - only alphanumeric plus '_'
+	removeChars(string) {
+		let cleanString = '';
+		const regex = /[a-zA-Z0-9_]/;
+		for (let i = 0; i < string.length; i++) {
+			if (regex.test(string[i])) {
+				cleanString += string[i];
+			} else {
+				this.setState({
+					errorMessage: 'Sorry, that character is not allowed'
+				})
+			}
+		}
+		return cleanString;
 	}
 
 	// Send information to firebase auth

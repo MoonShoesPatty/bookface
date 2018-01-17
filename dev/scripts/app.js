@@ -35,6 +35,7 @@ class App extends React.Component {
 						<Route exact path='/' component={MainFeed}></Route>
 						<Route exact path='/settings' component={SettingsPage}></Route>
 						<Route exact path='/create' component={CreateAccountPage}></Route>
+						<Route exact path='/login' component={LoginPage}></Route>
 						<Route exact path='/:username' component={ProfilePage}></Route>
 					</Switch>
 				</div>
