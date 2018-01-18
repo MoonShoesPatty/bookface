@@ -10,7 +10,7 @@ class createAccountPage extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			username: '',
+			email: '',
 			password: '',
 			confirmPassword: '',
 			firstName: '',
@@ -20,7 +20,7 @@ class createAccountPage extends React.Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.pushToFirebase = this.pushToFirebase.bind(this);
-		this.removeChars = this.removeChars.bind(this);
+		this.createUser = this.createUser.bind(this);
 	}
 
 	// Create user form submitted
@@ -28,15 +28,15 @@ class createAccountPage extends React.Component {
 		event.preventDefault();
 		if (this.state.password === this.state.confirmPassword) {
 			let userArray = [];
-			// Get list of usernames from Firebase
-			const usernames = await firebase.database().ref().once('value').then(function(snapshot) {
+			// Get list of emails from Firebase
+			const emails = await firebase.database().ref().once('value').then(function(snapshot) {
 				if (snapshot.val()) {
 					userArray = Object.keys(snapshot.val());
 				}
 			})
-			// Compare proposed name against list of existing usernames
+			// Compare proposed name against list of existing emails
 			if (userArray.map(name => {
-				if (name === this.state.username) {
+				if (name === this.state.email) {
 					return true;
 				} else {
 					return null;
@@ -46,10 +46,7 @@ class createAccountPage extends React.Component {
 					errorMessage: `Someone's already got that name`
 				})
 			} else {
-				// push to firebase if the name is unique
-				this.pushToFirebase();
-				// navigate to account setup
-				window.location = '/settings';
+				this.createUser();
 			}
 
 		} else {
@@ -61,56 +58,33 @@ class createAccountPage extends React.Component {
 
 	// User action: type in any input
 	handleChange(event) {
-		// set state two separate times to allow error message to be thrown on bad character entry (i.e. ! or something) - tested in removeChars
 		this.setState({
+			[event.target.name]: event.target.value.toLowerCase(),
 			errorMessage: ''
 		})
-		if (event.target.name === 'username') {
-			// don't allow special characters in usernames
-			this.setState({
-				[event.target.name]: this.removeChars(event.target.value.toLowerCase())
-			});
-		} else {
-			this.setState({
-				[event.target.name]: event.target.value.toLowerCase()
-			});
-		}
-	}
-
-	// remove special characters - only alphanumeric plus '_'
-	removeChars(string) {
-		let cleanString = '';
-		const regex = /[a-zA-Z0-9_]/;
-		for (let i = 0; i < string.length; i++) {
-			if (regex.test(string[i])) {
-				cleanString += string[i];
-			} else {
-				this.setState({
-					errorMessage: 'Sorry, that character is not allowed'
-				})
-			}
-		}
-		return cleanString;
 	}
 
 	// Send information to firebase auth
-	// pushToFirebase() {
-	// 	// Add a user for new player
-	// 	firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-	// 		.then((data) => {
-	// 			this.createUser(data.uid);
-	// 		})
-	// 		.catch((error) => {
-	// 			alert(error.message)
-	// 		})
-	// }
+	createUser() {
+		// Add a user for new player
+		firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+			.then((data) => {
+				this.pushToFirebase(data.uid);
+			})
+			.catch((error) => {
+				this.setState({
+					errorMessage: error.message
+				})
+			});
+	}
 
-	pushToFirebase() {
-		const dbRef = firebase.database().ref(this.state.username);
+	pushToFirebase(firebaseUID) {
+		console.log('Made it')
+		const dbRef = firebase.database().ref(firebaseUID);
 		// User info to be pushed
 		const userObject = {
 			info: {
-				name: this.state.username,
+				email: this.state.email,
 				pass: this.state.password,
 				fname: '',
 				lname: '',
@@ -128,15 +102,18 @@ class createAccountPage extends React.Component {
 				0: 'none'
 			}
 		}
-		dbRef.set(userObject);
+		dbRef.push(userObject);
 		this.setState({
-			username: '',
+			email: '',
 			password: '',
 			confirmPassword: '',
 			firstName: '',
 			lastName: '',
 			errorMessage: ''
 		})
+
+		// navigate to account setup
+		window.location = '/settings';
 	}
 
 	render() {
@@ -144,8 +121,8 @@ class createAccountPage extends React.Component {
 			<main>
 				<form action="" onSubmit={this.handleSubmit} className="createForm generalForm">
 					<h1 className="moduleTitle"><span>Sign</span>Up</h1>
-					<label htmlFor="username" className="createLabel">Username:</label>
-					<input type="text" id="username" name="username" onChange={this.handleChange} value={this.state.username} placeholder="Username" required className="createInput" />
+					<label htmlFor="email" className="createLabel">Email:</label>
+					<input type="text" id="email" name="email" onChange={this.handleChange} value={this.state.email} placeholder="Email" required className="createInput" />
 
 					<label htmlFor="password" className="createLabel">Password:</label>
 					<input type="text" id="password" name="password" onChange={this.handleChange} value={this.state.password} placeholder="Password" required className="createInput" />

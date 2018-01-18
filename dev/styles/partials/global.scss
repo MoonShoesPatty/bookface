@@ -23,12 +23,21 @@ p, label, input, textarea {
 .moduleTitle span {
 	font-weight: 700;
 }
+// .footerText {
+// 	position: absolute;
+// 	bottom: 18px;
+// 	right: 18px;
+// 	text-align: center;
+// 	color: #AAAAAA;
+// 	z-index: -100;
+// }
 
 // GENERAL FORM STYLES
 .generalForm {
 	width: 100%;
 	max-width: 480px;
 	margin: 0 auto;
+	margin-bottom: 20px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;

@@ -1,51 +1,52 @@
 @import './variables.scss';
 
 .settingsTitle {
-    // text-transform: uppercase;
-    font-weight: 300;
-    font-size: 1.1rem;
-    color: $mainDark;
-    text-align: left;
-    width: 100%;
-    margin: 0;
+	// text-transform: uppercase;
+	font-weight: 300;
+	font-size: 1.1rem;
+	color: $mainDark;
+	text-align: left;
+	width: 100%;
+	margin: 0;
 }
 .settingsTitle span {
-    font-weight: 700;
+	font-weight: 700;
 }
 .settingsTitle::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 0.5px;
-    background-color: $mainColor;
-    opacity: 0.15;
+	content: '';
+	display: block;
+	width: 100%;
+	height: 0.5px;
+	background-color: $mainColor;
+	opacity: 0.15;
 }
 .settingsLabel {
-    width: 100%;
-    padding-left: 8px;
-    margin-top: 20px;
-    margin-bottom: 5px;
-    font-weight: 600;
-    color: $mainColor;
+	width: 100%;
+	padding-left: 8px;
+	margin-top: 20px;
+	margin-bottom: 5px;
+	font-weight: 600;
+	color: $mainColor;
 }
 .settingsInput[type="text"], .settingsInput[type="password"] {
-    width: 100%;
+	width: 100%;
 }
 .settingsInput[type="file"] {
-    width: 100%;
-    font-size: 0.9rem;
-    margin: 5px 0 15px;
+	width: 100%;
+	font-size: 0.9rem;
+	margin: 5px 0 15px;
 }
 #firstName, #lastName {
-    width: 49%;
+	width: 49%;
 }
 #firstName {
-    margin-right: 2%;
+	margin-right: 2%;
 }
 .avatarPreview {
-    border-radius: 50%;
-    height: 200px;
-    width: 200px;
-    border: 1px solid $outlines;
-    margin-bottom: 25px;
+	border-radius: 50%;
+	height: 200px;
+	width: 200px;
+	border: 1px solid $outlines;
+	margin-bottom: 25px;
+	object-fit: cover;
 }

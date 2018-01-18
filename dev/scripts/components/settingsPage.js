@@ -20,18 +20,41 @@ class SettingsPage extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handlePhotoChange = this.handlePhotoChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.removeChars = this.removeChars.bind(this);
+    }
+
+    // On component load, find user information to pre-populate form
+    componentDidMount() {
+
     }
 
     // Create user form submitted
     handleSubmit(event) {
         event.preventDefault();
+
     }
 
     // Set state on form input change
     handleChange(event) {
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: this.removeChars(event.target.value)
         })
+    }
+
+    // remove special characters - only alphanumeric plus '_'
+    removeChars(string) {
+        let cleanString = '';
+        const regex = /[a-zA-Z0-9_]/;
+        for (let i = 0; i < string.length; i++) {
+            if (regex.test(string[i])) {
+                cleanString += string[i];
+            } else {
+                this.setState({
+                    errorMessage: 'Sorry, that character is not allowed'
+                })
+            }
+        }
+        return cleanString;
     }
 
     // Set avatar state and preview new image
