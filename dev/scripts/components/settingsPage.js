@@ -14,7 +14,8 @@ class SettingsPage extends React.Component {
             firstName: '',
             lastName: '',
             location: '',
-            avatar: ''
+            avatar: '',
+            imagePreviewUrl: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.handlePhotoChange = this.handlePhotoChange.bind(this);
@@ -69,7 +70,7 @@ class SettingsPage extends React.Component {
                     <label htmlFor="location" className="settingsLabel">Photo:</label>
                     <input type="file" id="avatar" name="avatar" accept=".jpg, .jpeg, .png" className="settingsInput" onChange={this.handlePhotoChange} />
                     
-                    <img src={this.state.imagePreviewUrl ? this.state.imagePreviewUrl : './assets/userPlaceholderImage.png'} alt="Your new profile photo" className="avatarPreview" />
+                    <img src={this.state.imagePreviewUrl !== '' ? this.state.imagePreviewUrl : '../public/assets/userPlaceholderImage.png'} alt="Your new profile photo" className="avatarPreview" />
 
                     <h2 className="settingsTitle"><span>Account</span>Settings</h2>
 
