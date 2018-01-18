@@ -9,7 +9,8 @@ import {
 // Import custom components
 import NavBar from './components/navBar.js';
 import MainFeed from './components/mainFeed.js';
-import LoginPage from './components/LoginPage.js';
+import LoginPage from './components/loginPage.js';
+import SplashPage from './components/splashPage.js';
 import ProfilePage from './components/profilePage.js';
 import SettingsPage from './components/settingsPage.js';
 import CreateAccountPage from './components/CreateAccountPage.js';
@@ -32,7 +33,8 @@ class App extends React.Component {
 				<div>
 					<NavBar />
 					<Switch>
-						<Route exact path='/' component={MainFeed}></Route>
+						<Route exact path='/' component={SplashPage}></Route>
+						<Route exact path='/feed' component={MainFeed}></Route>
 						<Route exact path='/settings' component={SettingsPage}></Route>
 						<Route exact path='/create' component={CreateAccountPage}></Route>
 						<Route exact path='/login' component={LoginPage}></Route>

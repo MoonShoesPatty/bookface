@@ -1,0 +1,90 @@
+@import './variables.scss';
+
+.splashWrapper {
+	width: 100%;
+    max-width: 768px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+	margin: 0 auto;
+	margin-bottom: 20px;
+	background-color: $lightText;
+	border: 1px solid $outlines;
+	border-left: 3px solid $mainColor;
+	box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+	padding: 30px;
+}
+.appTitle {
+    font-weight: 300;
+    text-transform: uppercase;
+    color: $mainDark;
+    font-size: 7rem;
+    text-align: center;
+    margin: 0;
+}
+.appTitle span {
+    font-weight: 700;
+}
+
+.appSubtitle {
+    text-align: center;
+    color: $mainDark;
+    margin-bottom: 40px;
+    width: 100%;
+}
+.appSubtitle span {
+    font-weight: 700;
+}
+.appSubtitle::after, .splashFooter::before {
+    content: '';
+    width: 80%;
+    height: 1px;
+    margin: 0 auto;
+    background-color: $outlines;
+    display: block;
+    position: relative;
+    top: 20px;
+}
+.splashFooter::before {
+    top: -15px;
+}
+
+.splashForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.splashButton {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    padding: 15px;
+    width: 50%;
+    height: auto;
+    margin: 20px 0;
+}
+
+.splashFooter {
+    margin-top: 35px;
+    width: 100%;
+    text-align: center;
+    color: $mainDark;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .appTitle {
+        font-size: 13vw;
+    }
+    .splashButton {
+        width: 60%;
+    }
+    .appSubtitle {
+        margin: 10px 0 30px 0;
+    }
+}
+@media (max-width: 480px) {
+    .splashButton {
+        width: 90%;
+    }
+}

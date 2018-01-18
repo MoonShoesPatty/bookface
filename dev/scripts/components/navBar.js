@@ -9,7 +9,7 @@ class NavBar extends React.Component {
 	render() {
 		return (
 			<nav className="navBar">
-				<Link to={`/`}>
+				<Link to={`/feed/`}>
 					<div className="navItem">
 						<p>Home</p>
 					</div>

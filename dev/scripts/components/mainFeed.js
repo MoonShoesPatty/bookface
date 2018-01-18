@@ -35,7 +35,7 @@ class MainFeed extends React.Component {
 		return (
 			<main>
 				<form action="" onSubmit={this.handleSubmit} className="newPostForm">
-					<img src="pj.jpg" alt="Your profile picture" className="userAvatar" />
+					<img src="../pj.jpg" alt="Your profile picture" className="userAvatar" />
 					<label htmlFor="newPost" className="hiddenLabel">Name:</label>
 					<textarea type="text" id="newPost" name="newPost" onChange={this.handleChange} value={this.state.newPost} placeholder="What's on your mind?" required className="newPostInput"></textarea>
 				</form>

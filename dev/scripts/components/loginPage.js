@@ -11,7 +11,8 @@ class LoginPage extends React.Component {
 		super();
 		this.state = {
 			loginEmail: '',
-			loginPassword: ''
+			loginPassword: '',
+			errorMessage: ''
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,10 +20,18 @@ class LoginPage extends React.Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-		this.setState({
-			loginEmail: '',
-			loginPassword: ''
-		})
+		firebase.auth().signInWithEmailAndPassword(this.state.loginEmail, this.state.loginPassword)
+			.then((data) => {
+				this.setState({
+					loginEmail: '',
+					loginPassword: ''
+				})
+			})
+			.catch((error) => {
+				this.setState({
+					errorMessage: error.message
+				})
+			});
 	}
 
 	handleChange(event) {
@@ -43,6 +52,10 @@ class LoginPage extends React.Component {
 					<label htmlFor="loginPassword" className="loginLabel">Password:</label>
 					<input type="password" id="loginPassword" name="loginPassword" onChange={this.handleChange} value={this.state.loginPassword} placeholder="Password" required className="loginInput" />
 					
+					{this.state.errorMessage === '' ? '' :
+						<p className="errorMessage">{this.state.errorMessage}</p>
+					}
+
 					<input type="submit" className="loginButton" value="Login" />
 				</form>
 			</main>
