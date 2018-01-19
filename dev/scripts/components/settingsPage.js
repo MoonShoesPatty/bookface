@@ -1,107 +1,116 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
-    BrowserRouter as Router,
-    Route, Link
+	BrowserRouter as Router,
+	Route, Link
 } from 'react-router-dom';
 import firebase from 'firebase';
 
 class SettingsPage extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            username: '',
-            firstName: '',
-            lastName: '',
-            location: '',
-            avatar: '',
-            imagePreviewUrl: ''
-        }
-        this.handleChange = this.handleChange.bind(this);
-        this.handlePhotoChange = this.handlePhotoChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.removeChars = this.removeChars.bind(this);
-    }
+	constructor() {
+		super();
+		this.state = {
+			username: '',
+			firstName: '',
+			lastName: '',
+			location: '',
+			avatar: '',
+			imagePreviewUrl: ''
+		}
+		this.handleChange = this.handleChange.bind(this);
+		this.handlePhotoChange = this.handlePhotoChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.removeChars = this.removeChars.bind(this);
+	}
 
-    // On component load, find user information to pre-populate form
-    componentDidMount() {
+	// On component load, find user information to pre-populate form
+	componentDidMount() {
+		const dbRef = firebase.database().ref();
+		console.log(this.props.currentUser)
+	}
 
-    }
+	// Create user form submitted
+	handleSubmit(event) {
+		event.preventDefault();
 
-    // Create user form submitted
-    handleSubmit(event) {
-        event.preventDefault();
+	}
 
-    }
+	// Set state on form input change
+	handleChange(event) {
+		this.setState({
+			errorMessage: ''
+		})
+		this.setState({
+			[event.target.name]: this.removeChars(event.target.value)
+		})
+	}
 
-    // Set state on form input change
-    handleChange(event) {
-        this.setState({
-            [event.target.name]: this.removeChars(event.target.value)
-        })
-    }
+	// remove special characters - only alphanumeric plus '_'
+	removeChars(string) {
+		let cleanString = '';
+		const regex = /[a-zA-Z0-9_]/;
+		for (let i = 0; i < string.length; i++) {
+			if (regex.test(string[i])) {
+				cleanString += string[i];
+			} else {
+				this.setState({
+					errorMessage: 'Sorry, that character is not allowed'
+				})
+			}
+		}
+		return cleanString;
+	}
 
-    // remove special characters - only alphanumeric plus '_'
-    removeChars(string) {
-        let cleanString = '';
-        const regex = /[a-zA-Z0-9_]/;
-        for (let i = 0; i < string.length; i++) {
-            if (regex.test(string[i])) {
-                cleanString += string[i];
-            } else {
-                this.setState({
-                    errorMessage: 'Sorry, that character is not allowed'
-                })
-            }
-        }
-        return cleanString;
-    }
+	// Set avatar state and preview new image
+	//  Shoutout to Brian Emil Hartz on Codepen for help
+	handlePhotoChange(event) {
+		event.preventDefault();
 
-    // Set avatar state and preview new image
-    //  Shoutout to Brian Emil Hartz on Codepen for help
-    handlePhotoChange(event) {
-        event.preventDefault();
+		let reader = new FileReader();
+		let file = event.target.files[0];
 
-        let reader = new FileReader();
-        let file = event.target.files[0];
+		reader.onloadend = () => {
+			this.setState({
+				avatar: file,
+				imagePreviewUrl: reader.result
+			});
+		}
 
-        reader.onloadend = () => {
-            this.setState({
-                avatar: file,
-                imagePreviewUrl: reader.result
-            });
-        }
+		reader.readAsDataURL(file);
+	}
 
-        reader.readAsDataURL(file);
-    }
+	render() {
+		return (
+			<main>
+				<form action="" onSubmit={this.handleSubmit} className="settingsForm generalForm">
+					<h2 className="settingsTitle"><span>Profile</span>Settings</h2>
 
-    render() {
-        return (
-            <main>
-                <form action="" onSubmit={this.handleSubmit} className="settingsForm generalForm">
-                    <h2 className="settingsTitle"><span>Profile</span>Settings</h2>
+					<label htmlFor="firstName" className="settingsLabel">Name:</label>
+					<div>
+						<input type="text" id="firstName" name="firstName" onChange={this.handleChange} placeholder="First" value={this.state.firstName} className="settingsInput" />
+						<input type="text" id="lastName" name="lastName" onChange={this.handleChange} placeholder="Last" value={this.state.lastName} className="settingsInput" />
+					</div>
 
-                    <label htmlFor="firstName" className="settingsLabel">Name:</label>
-                    <div>
-                        <input type="text" id="firstName" name="firstName" onChange={this.handleChange} placeholder="First" value={this.state.firstName} className="settingsInput" />
-                        <input type="text" id="lastName" name="lastName" onChange={this.handleChange} placeholder="Last" value={this.state.lastName} className="settingsInput" />
-                    </div>
+					{this.state.errorMessage === '' ? '' :
+						<p className="errorMessage">{this.state.errorMessage}</p>
+					}
 
-                    <label htmlFor="location" className="settingsLabel">Location:</label>
-                    <input type="text" id="location" name="location" onChange={this.handleChange} placeholder="Where are you?" value={this.state.location} className="settingsInput" />
+					<label htmlFor="location" className="settingsLabel">Location:</label>
+					<input type="text" id="location" name="location" onChange={this.handleChange} placeholder="Where are you?" value={this.state.location} className="settingsInput" />
 
-                    <label htmlFor="location" className="settingsLabel">Photo:</label>
-                    <input type="file" id="avatar" name="avatar" accept=".jpg, .jpeg, .png" className="settingsInput" onChange={this.handlePhotoChange} />
-                    
-                    <img src={this.state.imagePreviewUrl !== '' ? this.state.imagePreviewUrl : '../public/assets/userPlaceholderImage.png'} alt="Your new profile photo" className="avatarPreview" />
+					<label htmlFor="location" className="settingsLabel">Photo:</label>
+					<input type="file" id="avatar" name="avatar" accept=".jpg, .jpeg, .png" className="settingsInput" onChange={this.handlePhotoChange} />
+					
+					<img src={this.state.imagePreviewUrl !== '' ? this.state.imagePreviewUrl : '../public/assets/userPlaceholderImage.png'} alt="Your new profile photo" className="avatarPreview" />
 
-                    <h2 className="settingsTitle"><span>Account</span>Settings</h2>
+					<h2 className="settingsTitle"><span>Account</span>Settings</h2>
 
-                    <input type="submit" className="createButton" value="Delete Account" />
-                </form>
-            </main>
-        )
-    }
+					<Link to="" className="settingsButton" onClick={this.handleChange}>Log Out</Link>
+					<Link to="" className="settingsButton" onClick={this.handleChange}>Delete Account</Link>
+				</form>
+			</main>
+		)
+	}
 }
 
 export default SettingsPage;

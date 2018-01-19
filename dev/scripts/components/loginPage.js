@@ -24,7 +24,8 @@ class LoginPage extends React.Component {
 			.then((data) => {
 				this.setState({
 					loginEmail: '',
-					loginPassword: ''
+					loginPassword: '',
+					currentUser: data.uid
 				})
 			})
 			.catch((error) => {

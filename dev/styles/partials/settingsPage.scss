@@ -50,3 +50,15 @@
 	margin-bottom: 25px;
 	object-fit: cover;
 }
+.settingsButton {
+	color: $lightText;
+	background-color: $mainColor;
+	background-image: none;
+	border: 1px solid $mainDark;
+	font-size: 1rem;
+	text-decoration: none;
+	width: 50%;
+	margin-top: 20px;
+	text-align: center;
+	padding: 13px 0;
+}

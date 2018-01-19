@@ -27,6 +27,29 @@ var config = {
 firebase.initializeApp(config);
 
 class App extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			currentUser: null
+		}
+	}
+
+	// On component load, find which (if any) user is logged in
+	componentDidMount() {
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				console.log(user);
+				this.setState({
+					currentUser: user.uid
+				})
+			} else {
+				this.setState({
+					currentUser: null
+				})
+			}
+		})
+	}
+
 	render() {
 		return (
 			<Router history={BrowserHistory}>
@@ -35,7 +58,7 @@ class App extends React.Component {
 					<Switch>
 						<Route exact path='/' component={SplashPage}></Route>
 						<Route exact path='/feed' component={MainFeed}></Route>
-						<Route exact path='/settings' component={SettingsPage}></Route>
+						<Route exact path='/settings' component={SettingsPage} currentUser={this.state.currentUser}></Route>
 						<Route exact path='/create' component={CreateAccountPage}></Route>
 						<Route exact path='/login' component={LoginPage}></Route>
 						<Route exact path='/:username' component={ProfilePage}></Route>

@@ -67,5 +67,12 @@ p, label, input, textarea {
 	border: 1px solid $mainDark;
 	padding: 0 20px;
 	height: 35px;
-	font-size: 1rem;	
+	font-size: 1rem;
+}
+
+.errorMessage {
+    font-size: 0.85rem;
+    margin-top: 20px;
+	color: red;
+	text-align: center;
 }

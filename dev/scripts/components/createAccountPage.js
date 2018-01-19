@@ -102,7 +102,7 @@ class createAccountPage extends React.Component {
 				0: 'none'
 			}
 		}
-		dbRef.push(userObject);
+		dbRef.set(userObject);
 		this.setState({
 			email: '',
 			password: '',

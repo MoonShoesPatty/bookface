@@ -17,11 +17,11 @@ class SplashPage extends React.Component {
             <main className="splashWrapper">
                 <h1 className="appTitle"><span>Book</span>Face</h1>
                 <p className="appSubtitle"><span>Yes</span>, this is the popular social networking site known as "<span>BookFace</span>"</p>
-                <form action="" className="splashForm">
-                    <input type="submit" className="splashButton" value="Login" />
+                <div className="splashButtons">
+                    <Link to="/login" className="splashButton"><span>Log</span>in</Link>
                     <p>or</p>
-                    <input type="submit" className="splashButton" value="Sign Up" />
-                </form>
+                    <Link to="/create" className="splashButton"><span>Sign</span>up</Link>
+                </div>
                 <p className="splashFooter">Words at the bottom make you look more professional</p>
             </main>
         )
