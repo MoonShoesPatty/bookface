@@ -25,10 +25,7 @@
     "react-dom": "^16.1.1",
     "react-router-dom": "^4.2.2",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
-  },
-  "dependencies": {
-    "node-sass": "^4.7.1",
-    "react-router-with-props": "^0.1.1"
+    "vinyl-source-stream": "^1.1.0",
+    "node-sass": "^4.7.1"
   }
 }
