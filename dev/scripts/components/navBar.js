@@ -4,6 +4,8 @@ import {
 	BrowserRouter as Router,
 	Route, Link
 } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getUser } from '../actions/get-user';
 
 class NavBar extends React.Component {
 	render() {
@@ -14,7 +16,7 @@ class NavBar extends React.Component {
 						<p>Home</p>
 					</div>
 				</Link>
-				<Link to={`/patrick/`}>
+				<Link to={`/${this.props.currentUser}/`}>
 					<div className="navItem">
 						<p>Profile</p>
 					</div>
@@ -29,4 +31,10 @@ class NavBar extends React.Component {
 	}
 }
 
-export default NavBar;
+const stateMap = (state) => {
+	return {
+		currentUser: state.currentUser.user
+	};
+};
+
+export default connect(stateMap)(NavBar);

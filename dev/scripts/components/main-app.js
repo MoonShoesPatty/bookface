@@ -54,7 +54,7 @@ class MainApp extends React.Component {
 						<Route exact path='/settings' component={SettingsPage}></Route>
 						<Route exact path='/create' component={CreateAccountPage}></Route>
 						<Route exact path='/login' component={LoginPage}></Route>
-						<Route exact path='/:username' component={ProfilePage}></Route>
+						<Route exact path='/:userid' component={ProfilePage}></Route>
 					</Switch>
 					<div className="devName">{this.props.currentUser}</div>
 				</div>

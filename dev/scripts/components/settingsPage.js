@@ -52,7 +52,9 @@ class SettingsPage extends React.Component {
 		firebase.database().ref(`${this.props.currentUser}/info/lname`).set(this.state.lastName);
 		firebase.database().ref(`${this.props.currentUser}/info/location`).set(this.state.location);
 
-		
+		this.setState({
+			saveMessage: 'Saved Changes'
+		})
 	}
 
 	// Set state on form input change
@@ -130,6 +132,10 @@ class SettingsPage extends React.Component {
 
 					<input type="submit" className="settingsButton" value="Save Settings" />
 
+					{this.state.saveMessage ?
+						<p className="successMessage">{this.state.saveMessage}</p> : ''
+					}
+
 					<h2 className="settingsTitle"><span>Account</span>Settings</h2>
 
 					<Link to="" className="settingsLink" onClick={this.LogOut}>Log Out</Link>
@@ -141,7 +147,6 @@ class SettingsPage extends React.Component {
 }
 
 const stateMap = (state) => {
-	//console.log('state: ', state);
 	return {
 		currentUser: state.currentUser.user
 	};

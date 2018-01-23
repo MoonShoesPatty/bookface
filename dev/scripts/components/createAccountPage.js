@@ -5,8 +5,10 @@ import {
 	Route, Link
 } from 'react-router-dom';
 import firebase from 'firebase';
+import { connect } from 'react-redux';
+import { getUser } from '../actions/get-user';
 
-class createAccountPage extends React.Component {
+class CreateAccountPage extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -112,6 +114,9 @@ class createAccountPage extends React.Component {
 			errorMessage: ''
 		})
 
+		// update user state
+		this.props.dispatch(getUser(firebaseUID));
+
 		// navigate to account setup
 		window.location = '/settings';
 	}
@@ -141,4 +146,10 @@ class createAccountPage extends React.Component {
 	}
 }
 
-export default createAccountPage;
+const stateMap = (state) => {
+	return {
+		currentUser: state.currentUser.user
+	};
+};
+
+export default connect(stateMap)(CreateAccountPage);
