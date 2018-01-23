@@ -85,10 +85,10 @@ class createAccountPage extends React.Component {
 		const userObject = {
 			info: {
 				email: this.state.email,
-				pass: this.state.password,
 				fname: '',
 				lname: '',
-				location: ''
+				location: '',
+				imagePreviewUrl: ''
 			},
 			wall: {
 				userPosts: {

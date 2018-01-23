@@ -6,6 +6,7 @@ import {
 	BrowserRouter as Router,
 	Route, Link, Switch, BrowserHistory
 } from 'react-router-dom';
+import { connect } from 'react-redux';
 // custom components
 import NavBar from './navBar.js';
 import MainFeed from './mainFeed.js';
@@ -15,6 +16,7 @@ import ProfilePage from './profilePage.js';
 import CreateAccountPage from './CreateAccountPage.js';
 import SettingsPage from './settingsPage.js';
 // redux actions
+import { getUser } from '../actions/get-user';
 
 // Initialize Firebase
 var config = {
@@ -27,17 +29,18 @@ var config = {
 };
 firebase.initializeApp(config);
 
-export default class MainApp extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			currentUser: null
-		}
-	}
-
+class MainApp extends React.Component {
 	// On component load, find which (if any) user is logged in
-	componentDidMount() {
-		
+	async componentDidMount() {
+		await firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				this.props.dispatch(getUser(user.uid))
+			} else {
+				this.setState({
+					currentUser: null
+				})
+			}
+		})
 	}
 
 	render() {
@@ -53,8 +56,17 @@ export default class MainApp extends React.Component {
 						<Route exact path='/login' component={LoginPage}></Route>
 						<Route exact path='/:username' component={ProfilePage}></Route>
 					</Switch>
+					<div className="devName">{this.props.currentUser}</div>
 				</div>
 			</Router>
 		)
 	}
 }
+
+const stateMap = (state) => {
+	return {
+		currentUser: state.currentUser.user
+	};
+};
+
+export default connect(stateMap)(MainApp);

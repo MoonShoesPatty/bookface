@@ -8,15 +8,7 @@ import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { getUser } from '../actions/get-user';
 
-// @connect(
-// 	(store => {
-// 		return {
-// 			currentUser: store.getUser.user
-// 		}
-// 	})
-// )
-
-export default class SettingsPage extends React.Component {
+class SettingsPage extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -28,27 +20,39 @@ export default class SettingsPage extends React.Component {
 			imagePreviewUrl: ''
 		}
 		this.handleChange = this.handleChange.bind(this);
-		this.handlePhotoChange = this.handlePhotoChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+
+		this.handlePhotoChange = this.handlePhotoChange.bind(this);
+		this.displayPhoto = this.displayPhoto.bind(this);
+		
 		this.removeChars = this.removeChars.bind(this);
 	}
 
 	// On component load, find user information to pre-populate form
 	componentDidMount() {
-		// firebase.auth().onAuthStateChanged(user => {
-		// 	if (!user){
-		// 		this.setState({
-		// 			currentUser: null
-		// 		})
-		// 	}
-		// })
-		console.log(this.props);
+		const dbRef = firebase.database().ref(this.props.currentUser);
+		dbRef.once('value').then((snapshot) => {
+			console.log(snapshot.val())
+			if (snapshot.val()) {
+				this.setState({
+					firstName: snapshot.val().info.fname,
+					lastName: snapshot.val().info.lname,
+					location: snapshot.val().info.location,
+					imagePreviewUrl: (snapshot.val().info.imagePreviewUrl !== '' ? snapshot.val().info.imagePreviewUrl : '../public/assets/userPlaceholderImage.png')
+				})
+			}
+		});
 	}
 
 	// Create user form submitted
 	handleSubmit(event) {
 		event.preventDefault();
 
+		firebase.database().ref(`${this.props.currentUser}/info/fname`).set(this.state.firstName);
+		firebase.database().ref(`${this.props.currentUser}/info/lname`).set(this.state.lastName);
+		firebase.database().ref(`${this.props.currentUser}/info/location`).set(this.state.location);
+
+		
 	}
 
 	// Set state on form input change
@@ -82,8 +86,13 @@ export default class SettingsPage extends React.Component {
 	handlePhotoChange(event) {
 		event.preventDefault();
 
-		let reader = new FileReader();
 		let file = event.target.files[0];
+
+		this.displayPhoto(file);
+	}
+
+	displayPhoto(file) {
+		let reader = new FileReader();
 
 		reader.onloadend = () => {
 			this.setState({
@@ -117,14 +126,25 @@ export default class SettingsPage extends React.Component {
 					<label htmlFor="location" className="settingsLabel">Photo:</label>
 					<input type="file" id="avatar" name="avatar" accept=".jpg, .jpeg, .png" className="settingsInput" onChange={this.handlePhotoChange} />
 					
-					<img src={this.state.imagePreviewUrl !== '' ? this.state.imagePreviewUrl : '../public/assets/userPlaceholderImage.png'} alt="Your new profile photo" className="avatarPreview" />
+					<img src="../public/assets/userPlaceholderImage.png" alt="Your new profile photo" className="avatarPreview" />
+
+					<input type="submit" className="settingsButton" value="Save Settings" />
 
 					<h2 className="settingsTitle"><span>Account</span>Settings</h2>
 
-					<Link to="" className="settingsButton" onClick={this.handleChange}>Log Out</Link>
-					<Link to="" className="settingsButton" onClick={this.handleChange}>Delete Account</Link>
+					<Link to="" className="settingsLink" onClick={this.LogOut}>Log Out</Link>
+					<Link to="" className="settingsLink" onClick={this.DeleteAccount}>Delete Account</Link>
 				</form>
 			</main>
 		)
 	}
 }
+
+const stateMap = (state) => {
+	//console.log('state: ', state);
+	return {
+		currentUser: state.currentUser.user
+	};
+};
+
+export default connect(stateMap)(SettingsPage);
