@@ -5,8 +5,18 @@ import {
 	Route, Link
 } from 'react-router-dom';
 import firebase from 'firebase';
+import { connect } from 'react-redux';
+import { getUser } from '../actions/get-user';
 
-class SettingsPage extends React.Component {
+// @connect(
+// 	(store => {
+// 		return {
+// 			currentUser: store.getUser.user
+// 		}
+// 	})
+// )
+
+export default class SettingsPage extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -25,8 +35,14 @@ class SettingsPage extends React.Component {
 
 	// On component load, find user information to pre-populate form
 	componentDidMount() {
-		const dbRef = firebase.database().ref();
-		console.log(this.props.currentUser)
+		// firebase.auth().onAuthStateChanged(user => {
+		// 	if (!user){
+		// 		this.setState({
+		// 			currentUser: null
+		// 		})
+		// 	}
+		// })
+		console.log(this.props);
 	}
 
 	// Create user form submitted
@@ -112,5 +128,3 @@ class SettingsPage extends React.Component {
 		)
 	}
 }
-
-export default SettingsPage;

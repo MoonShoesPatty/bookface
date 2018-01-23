@@ -5,6 +5,8 @@ import {
 	Route, Link
 } from 'react-router-dom';
 import firebase from 'firebase';
+import { connect } from 'react-redux';
+import { getUser } from '../actions/get-user';
 
 class LoginPage extends React.Component {
 	constructor() {
@@ -16,12 +18,14 @@ class LoginPage extends React.Component {
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.propsToRedux = this.propsToRedux.bind(this);
 	}
 
 	handleSubmit(event) {
 		event.preventDefault();
 		firebase.auth().signInWithEmailAndPassword(this.state.loginEmail, this.state.loginPassword)
 			.then((data) => {
+				this.propsToRedux(data.uid);
 				this.setState({
 					loginEmail: '',
 					loginPassword: '',
@@ -39,6 +43,10 @@ class LoginPage extends React.Component {
 		this.setState({
 			[event.target.name]: event.target.value
 		});
+	}
+
+	propsToRedux(data) {
+		this.props.dispatch(getUser(data));
 	}
 
 	render() {
@@ -64,4 +72,11 @@ class LoginPage extends React.Component {
 	}
 }
 
-export default LoginPage;
+const stateMap = (state) => {
+	console.log('state: ', state);
+	return {
+		currentUser: state.userReducer.user
+	};
+};
+
+export default connect(stateMap)(LoginPage);
