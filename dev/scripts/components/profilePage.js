@@ -38,7 +38,7 @@ class ProfilePage extends React.Component {
 					</div>
 					<img src="" alt="" />
 					<div className="profileUserInfo">
-						<h1 className="ProfileTitle"><span>{this.state.firstName}</span>{this.state.lastName}</h1>
+						<h1 className="profileTitle"><span>{this.state.firstName}</span>{this.state.lastName}</h1>
 					</div>
 				</header>
 				<section className="profileBody">

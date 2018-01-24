@@ -26,32 +26,31 @@ class SettingsPage extends React.Component {
 		this.displayPhoto = this.displayPhoto.bind(this);
 		
 		this.removeChars = this.removeChars.bind(this);
+		this.getUserDatabase = this.getUserDatabase.bind(this);
 	}
 
 	// On component load, find user information to pre-populate form
 	componentDidMount() {
-		const dbRef = firebase.database().ref(this.props.currentUser);
-		dbRef.once('value').then((snapshot) => {
-			console.log(snapshot.val())
-			if (snapshot.val()) {
-				this.setState({
-					firstName: snapshot.val().info.fname,
-					lastName: snapshot.val().info.lname,
-					location: snapshot.val().info.location,
-					imagePreviewUrl: (snapshot.val().info.imagePreviewUrl !== '' ? snapshot.val().info.imagePreviewUrl : '../public/assets/userPlaceholderImage.png')
-				})
-			}
-		});
+		this.getUserDatabase();
 	}
 
 	// Create user form submitted
 	handleSubmit(event) {
 		event.preventDefault();
 
+		// Save user info
 		firebase.database().ref(`${this.props.currentUser}/info/fname`).set(this.state.firstName);
 		firebase.database().ref(`${this.props.currentUser}/info/lname`).set(this.state.lastName);
 		firebase.database().ref(`${this.props.currentUser}/info/location`).set(this.state.location);
 
+		// Save user photo
+		if (this.state.avatar) {
+			const photoRef = firebase.storage().ref().child(this.props.currentUser);
+			console.log(this.state.avatar)
+			photoRef.put(this.state.avatar);
+		}
+
+		// user feedback
 		this.setState({
 			saveMessage: 'Saved Changes'
 		})
@@ -67,10 +66,30 @@ class SettingsPage extends React.Component {
 		})
 	}
 
+	getUserDatabase() {
+		const dbRef = firebase.database().ref(this.props.currentUser);
+		dbRef.once('value').then((snapshot) => {
+			console.log(snapshot.val())
+			if (snapshot.val()) {
+				this.setState({
+					firstName: snapshot.val().info.fname,
+					lastName: snapshot.val().info.lname,
+					location: snapshot.val().info.location
+				})
+			}
+			const photoRef = firebase.storage().ref().child(this.props.currentUser);
+			photoRef.getDownloadURL().then((url) => {
+				this.setState({
+					imagePreviewUrl: url
+				})
+			})
+		});
+	}
+
 	// remove special characters - only alphanumeric plus '_'
 	removeChars(string) {
 		let cleanString = '';
-		const regex = /[a-zA-Z0-9_]/;
+		const regex = /[a-zA-Z0-9_ ]/;
 		for (let i = 0; i < string.length; i++) {
 			if (regex.test(string[i])) {
 				cleanString += string[i];
@@ -87,10 +106,16 @@ class SettingsPage extends React.Component {
 	//  Shoutout to Brian Emil Hartz on Codepen for help
 	handlePhotoChange(event) {
 		event.preventDefault();
+		console.log(event.target.files)
+		if (event.target.files[0].size < 4000000) {
+			let file = event.target.files[0];
+			this.displayPhoto(file);
+		} else {
+			this.setState({
+				errorMessage: 'Sorry, that file is too big'
+			})
+		}
 
-		let file = event.target.files[0];
-
-		this.displayPhoto(file);
 	}
 
 	displayPhoto(file) {
@@ -128,7 +153,7 @@ class SettingsPage extends React.Component {
 					<label htmlFor="location" className="settingsLabel">Photo:</label>
 					<input type="file" id="avatar" name="avatar" accept=".jpg, .jpeg, .png" className="settingsInput" onChange={this.handlePhotoChange} />
 					
-					<img src="../public/assets/userPlaceholderImage.png" alt="Your new profile photo" className="avatarPreview" />
+					<img src={this.state.imagePreviewUrl ? this.state.imagePreviewUrl : "../public/assets/userPlaceholderImage.png"} alt="Your new profile photo" className="avatarPreview" />
 
 					<input type="submit" className="settingsButton" value="Save Settings" />
 
@@ -141,6 +166,7 @@ class SettingsPage extends React.Component {
 					<Link to="" className="settingsLink" onClick={this.LogOut}>Log Out</Link>
 					<Link to="" className="settingsLink" onClick={this.DeleteAccount}>Delete Account</Link>
 				</form>
+				<p>{this.props.currentUser}</p>
 			</main>
 		)
 	}
