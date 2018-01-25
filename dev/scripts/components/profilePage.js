@@ -24,11 +24,15 @@ class ProfilePage extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getUserDatabase();
+		this.getUserDatabase(this.props.currentUser);
 	}
 
-	getUserDatabase() {
-		const dbRef = firebase.database().ref(this.props.currentUser);
+	componentWillReceiveProps(nextProps) {
+		this.getUserDatabase(nextProps.currentUser);
+	}
+
+	getUserDatabase(user) {
+		const dbRef = firebase.database().ref(user);
 		dbRef.once('value').then((snapshot) => {
 			console.log(snapshot.val())
 			if (snapshot.val()) {
@@ -38,7 +42,7 @@ class ProfilePage extends React.Component {
 					location: snapshot.val().info.location
 				})
 			}
-			const photoRef = firebase.storage().ref().child(this.props.currentUser);
+			const photoRef = firebase.storage().ref().child(user);
 			photoRef.getDownloadURL().then((url) => {
 				this.setState({
 					imagePreviewUrl: url

@@ -16,6 +16,7 @@
 }
 .profileUserInfo {
     padding: 20px;
+    background-image: linear-gradient(to top, rgba(0,0,0,0.1), transparent 2%);
 }
 .profileTitle {
     font-weight: 300;
@@ -63,6 +64,7 @@
     z-index: 100;
 }
 .profileLink {
+    background-image: linear-gradient(to top, rgba(0,0,0,0.15), transparent 25%);
     background-color: $mainColor;
     border: 1px solid $outlines;
     width: 30%;
@@ -72,8 +74,10 @@
     font-size: 1rem;
     text-transform: uppercase;
     text-decoration: none;
+    border-radius: 5px 5px 0 0;
 }
 .profileLink.active {
+    background-image: none;
     background-color: white;
     border-bottom: none;
     color: $mainColor;
